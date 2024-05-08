@@ -1,16 +1,25 @@
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Ca2d.Toolkit
 {
+    /// <summary>
+    /// An utility which allows you to reference an <see cref="UnityEngine.Object"/> via it's interface.
+    /// </summary>
+    /// <typeparam name="T">The type of class which you are willing to reference as.</typeparam>
     [Serializable]
     public struct UnityObjectWarp<T> where T : class
     {
-        [SerializeField] private Object m_referencedObject;
+        [SerializeField] private UnityEngine.Object m_referencedObject;
 
+        /// <summary>
+        /// Is this warp reference to a valid target?
+        /// </summary>
         public bool Valid => m_referencedObject is T;
         
+        /// <summary>
+        /// Trying to get the actual object of this reference.
+        /// </summary>
         public T Object => m_referencedObject as T;
         
         public static implicit operator T(UnityObjectWarp<T> wrapper)

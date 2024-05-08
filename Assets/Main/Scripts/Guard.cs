@@ -8,31 +8,48 @@ namespace Ca2d.Toolkit
     public static class Guard
     {
         /*  IgnoreException Utils  */
+
+        private static void IgnoreNoTarget()
+        {
+            Debug.LogError("Ignore Exception should run with executor!");
+        }
         
         #region IgnoreException(Action)
 
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
         public static void IgnoreException(Action exec)
         {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 exec.Invoke();
             }
             catch (Exception e)
             { Debug.LogError(e); }
         }
         
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
         public static T IgnoreException<T>(Func<T> exec)
         {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 return exec.Invoke();
             }
             catch (Exception e)
@@ -41,28 +58,42 @@ namespace Ca2d.Toolkit
             return default(T);
         }
         
-        public static async UniTask IgnoreException(Func<UniTask> exec)
+        
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        public static async UniTask IgnoreExceptionAsync(Func<UniTask> exec)
         {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 await exec.Invoke();
             }
             catch (Exception e)
             { Debug.LogError(e); }
         }
 
-        public static async UniTask<T> IgnoreException<T>(Func<UniTask<T>> exec)
+        
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        public static async UniTask<T> IgnoreExceptionAsync<T>(Func<UniTask<T>> exec)
         {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 return await exec.Invoke();
             }
             catch (Exception e)
@@ -71,92 +102,47 @@ namespace Ca2d.Toolkit
             return default(T);
         }
         
-        public static async Task IgnoreException(Func<Task> exec)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                await exec.Invoke();
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-        }
-
-        public static async Task<T> IgnoreException<T>(Func<Task<T>> exec)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                return await exec.Invoke();
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-
-            return default(T);
-        }
-        
-        public static async ValueTask IgnoreException(Func<ValueTask> exec)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                await exec.Invoke();
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-        }
-
-        public static async ValueTask<T> IgnoreException<T>(Func<ValueTask<T>> exec)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                return await exec.Invoke();
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-
-            return default(T);
-        }
-
         #endregion
         
-        #region IgnoreException(this Source, Action<Source::Type>)
+        #region IgnoreException(this Source, Action<Source>)
 
-        public static void IgnoreException<TSource>(TSource source, Action<TSource> exec)
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="source">The source of this operation</param>
+        /// <param name="exec">Executor of source executor</param>
+        public static void IgnoreException<TSource>(this TSource source, Action<TSource> exec)
         {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+                
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 exec.Invoke(source);
             }
             catch (Exception e)
             { Debug.LogError(e); }
         }
         
-        public static T IgnoreException<TSource, T>(TSource source, Func<TSource, T> exec)
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="source">The source of this operation</param>
+        /// <param name="exec">Executor of source executor</param>
+        public static T IgnoreException<TSource, T>(this TSource source, Func<TSource, T> exec)
         {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+            
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 return exec.Invoke(source);
             }
             catch (Exception e)
@@ -165,88 +151,42 @@ namespace Ca2d.Toolkit
             return default(T);
         }
         
-        public static async UniTask IgnoreException<TSource>(TSource source, Func<TSource, UniTask> exec)
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="source">The source of this operation</param>
+        /// <param name="exec">Executor of source executor</param>
+        public static async UniTask IgnoreExceptionAsync<TSource>(this TSource source, Func<TSource, UniTask> exec)
         {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+                
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 await exec.Invoke(source);
             }
             catch (Exception e)
             { Debug.LogError(e); }
         }
 
-        public static async UniTask<T> IgnoreException<TSource, T>(TSource source, Func<TSource, UniTask<T>> exec)
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="source">The source of this operation</param>
+        /// <param name="exec">Executor of source executor</param>
+        public static async UniTask<T> IgnoreExceptionAsync<TSource, T>(this TSource source, Func<TSource, UniTask<T>> exec)
         {
-            try
+            if (exec == null)
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                return await exec.Invoke(source);
+                IgnoreNoTarget();
+                return default(T);
             }
-            catch (Exception e)
-            { Debug.LogError(e); }
-
-            return default(T);
-        }
-        
-        public static async Task IgnoreException<TSource>(TSource source, Func<TSource, Task> exec)
-        {
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                await exec.Invoke(source);
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-        }
-
-        public static async Task<T> IgnoreException<TSource, T>(TSource source, Func<TSource, Task<T>> exec)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                return await exec.Invoke(source);
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-
-            return default(T);
-        }
-        
-        public static async ValueTask IgnoreException<TSource>(this TSource source, Func<TSource, ValueTask> exec)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                await exec.Invoke(source);
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-        }
-
-        public static async ValueTask<T> IgnoreException<TSource, T>(this TSource source, Func<TSource, ValueTask<T>> exec)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 return await exec.Invoke(source);
             }
             catch (Exception e)
@@ -257,30 +197,46 @@ namespace Ca2d.Toolkit
 
         #endregion
         
-        #region IgnoreException(Action<P1::Type>, P1)
+        #region IgnoreException(Action<P1>, P1)
 
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
         public static void IgnoreException<TP1>(Action<TP1> exec, TP1 p1)
         {
+            
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 exec.Invoke(p1);
             }
             catch (Exception e)
             { Debug.LogError(e); }
         }
         
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
         public static T IgnoreException<TP1, T>(Func<TP1, T> exec, TP1 p1)
         {
+            
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 return exec.Invoke(p1);
             }
             catch (Exception e)
@@ -289,88 +245,44 @@ namespace Ca2d.Toolkit
             return default(T);
         }
         
-        public static async UniTask IgnoreException<TP1>(Func<TP1, UniTask> exec, TP1 p1)
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        public static async UniTask IgnoreExceptionAsync<TP1>(Func<TP1, UniTask> exec, TP1 p1)
         {
+            
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 await exec.Invoke(p1);
             }
             catch (Exception e)
             { Debug.LogError(e); }
         }
 
-        public static async UniTask<T> IgnoreException<TP1, T>(Func<TP1, UniTask<T>> exec, TP1 p1)
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        public static async UniTask<T> IgnoreExceptionAsync<TP1, T>(Func<TP1, UniTask<T>> exec, TP1 p1)
         {
-            try
+            
+            if (exec == null)
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                return await exec.Invoke(p1);
+                IgnoreNoTarget();
+                return default(T);
             }
-            catch (Exception e)
-            { Debug.LogError(e); }
-
-            return default(T);
-        }
-        
-        public static async Task IgnoreException<TP1>(Func<TP1, Task> exec, TP1 p1)
-        {
+            
             try
             {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                await exec.Invoke(p1);
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-        }
-
-        public static async Task<T> IgnoreException<TP1, T>(Func<TP1, Task<T>> exec, TP1 p1)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                return await exec.Invoke(p1);
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-
-            return default(T);
-        }
-        
-        public static async ValueTask IgnoreException<TP1>(Func<TP1, ValueTask> exec, TP1 p1)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
-                await exec.Invoke(p1);
-            }
-            catch (Exception e)
-            { Debug.LogError(e); }
-        }
-
-        public static async ValueTask<T> IgnoreException<TP1, T>(Func<TP1, ValueTask<T>> exec, TP1 p1)
-        {
-            try
-            {
-                if (exec == null) throw new ArgumentNullException(
-                    nameof(exec),
-                    "Ignore Exception should run with executor!");
-                
                 return await exec.Invoke(p1);
             }
             catch (Exception e)
@@ -381,6 +293,477 @@ namespace Ca2d.Toolkit
 
         #endregion
 
+        #region IgnoreException(Action<P1, P2>, P1, P2)
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        public static void IgnoreException<TP1, TP2>(Action<TP1, TP2> exec, TP1 p1, TP2 p2)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                exec.Invoke(p1, p2);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+        
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        public static T IgnoreException<TP1, TP2, T>(Func<TP1, TP2, T> exec, TP1 p1, TP2 p2)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return exec.Invoke(p1, p2);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        public static async UniTask IgnoreExceptionAsync<TP1, TP2>(Func<TP1, TP2, UniTask> exec, TP1 p1, TP2 p2)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                await exec.Invoke(p1, p2);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        public static async UniTask<T> IgnoreExceptionAsync<TP1, TP2, T>(
+            Func<TP1, TP2, UniTask<T>> exec, TP1 p1, TP2 p2)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return await exec.Invoke(p1, p2);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+
+        #endregion
+        
+        #region IgnoreException(Action<P1, P2, P3>, P1, P2, P3)
+        
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        public static void IgnoreException<TP1, TP2, TP3>(
+            Action<TP1, TP2, TP3> exec, 
+            TP1 p1, TP2 p2, TP3 p3)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                exec.Invoke(p1, p2, p3);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        public static T IgnoreException<TP1, TP2, TP3, T>(
+            Func<TP1, TP2, TP3, T> exec, 
+            TP1 p1, TP2 p2, TP3 p3)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return exec.Invoke(p1, p2, p3);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        public static async UniTask IgnoreExceptionAsync<TP1, TP2, TP3>(
+            Func<TP1, TP2, TP3, UniTask> exec, 
+            TP1 p1, TP2 p2, TP3 p3)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                await exec.Invoke(p1, p2, p3);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        public static async UniTask<T> IgnoreExceptionAsync<TP1, TP2, TP3, T>(
+            Func<TP1, TP2, TP3, UniTask<T>> exec,
+            TP1 p1, TP2 p2, TP3 p3)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return await exec.Invoke(p1, p2, p3);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+        
+        #endregion
+        
+        #region IgnoreException(Action<P1, P2, P3, P4>, P1, P2, P3, P4)
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        public static void IgnoreException<TP1, TP2, TP3, TP4>(
+            Action<TP1, TP2, TP3, TP4> exec,
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                exec.Invoke(p1, p2, p3, p4);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        public static T IgnoreException<TP1, TP2, TP3, TP4, T>(
+            Func<TP1, TP2, TP3, TP4, T> exec,
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return exec.Invoke(p1, p2, p3, p4);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        public static async UniTask IgnoreExceptionAsync<TP1, TP2, TP3, TP4>(
+            Func<TP1, TP2, TP3, TP4, UniTask> exec,
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                await exec.Invoke(p1, p2, p3, p4);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        public static async UniTask<T> IgnoreExceptionAsync<TP1, TP2, TP3, TP4, T>(
+            Func<TP1, TP2, TP3, TP4, UniTask<T>> exec,
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return await exec.Invoke(p1, p2, p3, p4);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+        
+        #endregion
+        
+        
+        #region IgnoreException(Action<P1, P2, P3, P4, P5>, P1, P2, P3, P4, P5)
+        
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        /// <param name="p5">Fifth parameter of this method</param>
+        public static void IgnoreException<TP1, TP2, TP3, TP4, TP5>(
+            Action<TP1, TP2, TP3, TP4, TP5> exec, 
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4, TP5 p5)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                exec.Invoke(p1, p2, p3, p4, p5);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        /// <param name="p5">Fifth parameter of this method</param>
+        public static T IgnoreException<TP1, TP2, TP3, TP4, TP5, T>(
+            Func<TP1, TP2, TP3, TP4, TP5, T> exec,
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4, TP5 p5)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return exec.Invoke(p1, p2, p3, p4, p5);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        /// <param name="p5">Fifth parameter of this method</param>
+        public static async UniTask IgnoreExceptionAsync<TP1, TP2, TP3, TP4, TP5>(
+            Func<TP1, TP2, TP3, TP4, TP5, UniTask> exec,
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4, TP5 p5)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return;
+            }
+
+            try
+            {
+                await exec.Invoke(p1, p2, p3, p4, p5);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Ignore <see cref="Exception"/>s raised with this method and log them into console directly.
+        /// </summary>
+        /// <param name="exec">Executor of method</param>
+        /// <param name="p1">First parameter os this method</param>
+        /// <param name="p2">Second parameter of this method</param>
+        /// <param name="p3">Third parameter of this method</param>
+        /// <param name="p4">Fourth parameter of this method</param>
+        /// <param name="p5">Fifth parameter of this method</param>
+        public static async UniTask<T> IgnoreExceptionAsync<TP1, TP2, TP3, TP4, TP5, T>(
+            Func<TP1, TP2, TP3, TP4, TP5, UniTask<T>> exec,
+            TP1 p1, TP2 p2, TP3 p3, TP4 p4, TP5 p5)
+        {
+            if (exec == null)
+            {
+                IgnoreNoTarget();
+                return default(T);
+            }
+
+            try
+            {
+                return await exec.Invoke(p1, p2, p3, p4, p5);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return default(T);
+        }
+
+        
+        #endregion
+        
         /*   UnityObject Related   */
         
         #region RequireComponent
@@ -390,7 +773,7 @@ namespace Ca2d.Toolkit
             if (opt.Enabled)
             {
                 if (opt.Value == null)
-                    throw new Exception();
+                    throw new LoseRequirementException(typeof(T));
                 
                 component = opt.Value;
                 return true;
@@ -427,7 +810,7 @@ namespace Ca2d.Toolkit
         {
             if (!go.TryGetComponent<T>(out component))
             {
-                throw new Exception();
+                throw new LoseRequirementException(typeof(T));
             }
 
             return go;
@@ -437,7 +820,7 @@ namespace Ca2d.Toolkit
         {
             if (!source.TryGetComponent<T>(out component))
             {
-                throw new Exception();
+                throw new LoseRequirementException(typeof(T));
             }
 
             return source;

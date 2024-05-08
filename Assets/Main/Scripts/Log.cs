@@ -378,6 +378,9 @@ namespace Ca2d.Toolkit
         
         public void Error(string text)
         {}
+        
+        public void Error(Exception err)
+        {}
     }
     
     public static class QLog

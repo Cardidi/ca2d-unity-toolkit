@@ -3,6 +3,11 @@ using UnityEngine.Assertions;
 
 namespace Ca2d.Toolkit
 {
+    /// <summary>
+    /// An utility structure which helps you to create an optional field in Unity Editor or a <see cref="Nullable"/>
+    /// alternative.
+    /// </summary>
+    /// <typeparam name="T">The type which will be optional.</typeparam>
     [Serializable]
     public struct Option<T>
     {
