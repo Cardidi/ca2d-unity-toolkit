@@ -2,6 +2,9 @@ using System;
 
 namespace Ca2d.Toolkit
 {
+    /// <summary>
+    /// When Unity Requirements did not fit <see cref="Guard"/> wants, throw this.
+    /// </summary>
     public class LoseRequirementException : Exception
     {
         public Type RequiredType { get; }

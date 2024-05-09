@@ -11,8 +11,14 @@ namespace Ca2d.Toolkit
     [Serializable]
     public struct Option<T>
     {
+        /// <summary>
+        /// Is option set to fill.
+        /// </summary>
         public bool Enabled;
 
+        /// <summary>
+        /// Value inside of option
+        /// </summary>
         public T Value;
 
         public T ValueOrDefault()

@@ -15,16 +15,26 @@ namespace Ca2d.Toolkit
         /// <summary>
         /// Is this warp reference to a valid target?
         /// </summary>
-        public bool Valid => m_referencedObject is T;
+        public bool Is => m_referencedObject is T;
         
         /// <summary>
         /// Trying to get the actual object of this reference.
         /// </summary>
-        public T Object => m_referencedObject as T;
+        public T As => m_referencedObject as T;
         
-        public static implicit operator T(UnityObjectWarp<T> wrapper)
+        /// <summary>
+        /// Is this warp reference to a valid target? If this is valid, give the casting result.
+        /// </summary>
+        public bool IsAs(out T val)
         {
-            return wrapper.Object;
+            if (m_referencedObject is T referenced)
+            {
+                val = referenced;
+                return true;
+            }
+            
+            val = null;
+            return false;
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Ca2d.Toolkit
 {
@@ -18,7 +17,7 @@ namespace Ca2d.Toolkit
         /// </summary>
         public Boxing(Boxing<T> source)
         {
-            m_value = source.Unbox;
+            m_value = source.m_value;
         }
         
         /// <summary>
@@ -30,24 +29,15 @@ namespace Ca2d.Toolkit
         }
         
         /// <summary>
-        /// Create a empty boxing.
+        /// Create an empty boxing.
         /// </summary>
         public Boxing()
         {}
 
         /// <summary>
-        /// Get a copy of boxing value.
+        /// Access to the boxing value directly in reference mode.
         /// </summary>
-        public T Unbox
-        {
-            get => m_value;
-            set => m_value = value;
-        }
-
-        /// <summary>
-        /// Access to the boxing value directly.
-        /// </summary>
-        public ref T Direct => ref m_value;
+        public ref T Ref => ref m_value;
 
         /// <summary>
         /// Clean this boxing container to the default value of boxing target.
@@ -62,9 +52,9 @@ namespace Ca2d.Toolkit
             return m_value.ToString();
         }
 
-        public static implicit operator T(Boxing<T> wrapper)
+        public static explicit operator T(Boxing<T> wrapper)
         {
-            return wrapper.Unbox;
+            return wrapper.m_value;
         }
 
         public static implicit operator Boxing<T>(T value)
