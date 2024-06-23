@@ -1,0 +1,14 @@
+{
+  "name": "xyz.ca2didi.unity.toolkit",
+  "version": "0.1.0",
+  "displayName": "Ca2D Toolkit",
+  "description": "Set of toolkits which can boost your develop experience and speed in Unity.",
+  "unity": "2021.3",
+  "author": {
+    "name": "ca2didi",
+    "url": "https://ca2didi.xyz"
+  },
+  "dependencies": {
+    "com.cysharp.unitask": "2.5.4"
+  }
+}
