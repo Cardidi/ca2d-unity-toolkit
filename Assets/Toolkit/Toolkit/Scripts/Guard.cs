@@ -11,7 +11,9 @@ namespace Ca2d.Toolkit
 
         private static void IgnoreNoTarget()
         {
+#if UNITY_EDITOR
             Debug.LogError("Ignore Exception should run with executor!");
+#endif
         }
         
         #region IgnoreException(Action)

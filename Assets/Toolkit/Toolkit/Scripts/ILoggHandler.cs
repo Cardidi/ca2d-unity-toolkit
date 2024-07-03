@@ -1,3 +1,4 @@
+#if ENABLE_LOGG
 using UnityEngine;
 
 namespace Ca2d.Toolkit
@@ -41,3 +42,4 @@ namespace Ca2d.Toolkit
         public void ClearLabel();
     }
 }
+#endif

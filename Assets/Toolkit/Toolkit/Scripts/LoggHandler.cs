@@ -1,3 +1,4 @@
+#if ENABLE_LOGG
 using System;
 using System.Diagnostics;
 using System.Text;
@@ -100,3 +101,4 @@ namespace Ca2d.Toolkit
         }
     }
 }
+#endif
