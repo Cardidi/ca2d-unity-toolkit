@@ -1,18 +1,19 @@
 using System;
+using System.Reflection;
 
 namespace Ca2d.Toolkit
 {
     public static class AotHelper
     {
-        private static DateTime alwayasFalseSource = DateTime.UtcNow;
+        private static readonly DateTime AlwaysFalseSource = DateTime.UtcNow;
         
         /// <summary>
         /// Utility to provide a must be false option for Ahead-of-time compiler.
         /// </summary>
         /// <returns>False</returns>
-        public static bool AlwaysFalseProvider()
+        public static bool False()
         {
-            return alwayasFalseSource.Year < 0;
+            return AlwaysFalseSource.Year < 0;
         }
 
         /// <summary>
@@ -20,7 +21,12 @@ namespace Ca2d.Toolkit
         /// </summary>
         public static void Ensure(Action call)
         {
-            if (AlwaysFalseProvider()) call?.Invoke();
+            if (False()) call?.Invoke();
+        }
+
+        public static void Ensure<T>()
+        {
+            if (False()) typeof(T).GetTypeInfo();
         }
     }
 }
